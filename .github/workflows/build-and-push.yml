@@ -7,6 +7,10 @@ on:
     #  - 'mkdocs.yml'
     #  - 'Dockerfile'
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-test-push:
     runs-on: ubuntu-latest
