@@ -12,8 +12,13 @@ permissions:
   packages: write
 
 jobs:
-  build-test-push:
+  build-test-deploy:
     runs-on: ubuntu-latest
+    
+    env:
+      REGION: us-central1
+      SERVICE_NAME: mkdocs-site
+      IMAGE: ghcr.io/${{ github.repository }}:latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -30,7 +35,6 @@ jobs:
 
       - name: Build Docker image
         run: |
-          IMAGE="ghcr.io/${{ github.repository }}:latest"
           docker build \
             --label org.opencontainers.image.source="https://github.com/${{ github.repository }}" \
             --label org.opencontainers.image.revision="${{ github.sha }}" \
@@ -40,8 +44,7 @@ jobs:
 
       - name: Test Container
         run: |
-          IMAGE="ghcr.io/${{ github.repository }}:latest"
-          CONTAINER=$(docker run -d -p 8080:80 "$IMAGE")
+          CONTAINER=$(docker run -d -p 8080:8080 "$IMAGE")
           sleep 10
           curl -f http://localhost:8080 || (echo 'Site not responding!' && exit 1)
           docker stop "$CONTAINER"
@@ -49,5 +52,17 @@ jobs:
 
       - name: Push Docker image
         run: |
-          IMAGE="ghcr.io/${{ github.repository }}:latest"
           docker push "$IMAGE"
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          image: ${{ env.IMAGE }}
+          service: ${{ env.SERVICE_NAME }}
+          region: ${{ env.REGION }}
+          allow-unauthenticated: true 
