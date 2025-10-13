@@ -18,7 +18,7 @@ jobs:
     env:
       REGION: us-central1
       SERVICE_NAME: mkdocs-site
-      IMAGE: ghcr.io/${{ github.repository }}:latest
+      IMAGE: us-central1-docker.pkg.dev/nifty-pursuit-475017-k3/ghcr/mkdocs-site:latest
       PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
 
     steps:
