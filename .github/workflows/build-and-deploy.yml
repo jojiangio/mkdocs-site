@@ -19,6 +19,8 @@ jobs:
       REGION: us-central1
       SERVICE_NAME: mkdocs-site
       IMAGE: ghcr.io/${{ github.repository }}:latest
+      PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -62,7 +64,8 @@ jobs:
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
-          image: ${{ env.IMAGE }}
-          service: ${{ env.SERVICE_NAME }}
+          project_id: ${{ env.PROJECT_ID }}
           region: ${{ env.REGION }}
-          allow-unauthenticated: true 
+          service: ${{ env.SERVICE_NAME }}
+          image: ${{ env.IMAGE }}
+          flags: '--allow-unauthenticated'
