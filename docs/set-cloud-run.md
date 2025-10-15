@@ -99,7 +99,31 @@ Go to Google Cloud Console → Artifact Registry → Create Repository:
 
 - Click Copy path in Repository Details 
 
-## Check service url after everything is working
+## Check service url
 ```bash
 gcloud run services list --platform=managed
 ```
+
+## Use custom domain
+### Google verifes domain for SSL
+Go to [Google Search Console](https://search.google.com/search-console/welcome) to verify the domain
+
+### Run domain mapping command 
+```bash
+gcloud beta run domain-mappings create \
+  --service mkdocs-site \
+  --domain some.domain \
+  --region us-central1 \
+  --platform managed
+```
+
+## Add the DNS record to the DNS provider
+
+- Go to the DNS provider’s dashboard
+- Find the DNS management section for the domain 
+- Add a new CNAME record:
+    - Host/Name: docs (sub-domain)
+    - Value/Points to: ghs.googlehosted.com.[^dot]
+[^dot]: The dot in the end is critical to mark the hostname as an absolute, FQDN without appending a local domain suffix.
+    - TTL: Default
+- After SSL is ready, the site will be avaliable
