@@ -14,8 +14,10 @@ data = res.json()
 ```bash
 # Access field
 field = data["key"]
+
 # Loop over list of dicts
 values = [item["key"] for item in data]
+
 # Filter
 filtered = [x for x in data if x["status"] == "failed"]
 ```
