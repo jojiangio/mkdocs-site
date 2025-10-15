@@ -73,25 +73,33 @@ gcloud iam service-accounts keys create key.json \
 1. Copy the entire key.json contents
 2. Go to the repo settings on Github
 3. Click Secrets and variables → Actions
-4. Add the key to New repository secret and give it a meaning name (ex: GCP_SERVICE_ACCOUNT_KEY)
+4. Add the key to New repository secret and give it a meaningful name (ex: GCP_SERVICE_ACCOUNT_KEY)
 
 ## Configure the repository and deploy a Cloud Run service
 
 Go to Google Cloud Console → Artifact Registry → Create Repository:
 
-Name: ghcr (or any name)
-Format: Docker
-Location Type: Region
-Location: us-central1
-Description: optional
-Leave Repository Type as Standard
-Cleanup policies: Dry run
-(Optional) Enable Public Access if you want the repo to be publicly pullable
-Click Create
+- Name: ghcr (or any name)
 
-Click Copy path in Repository Details 
+- Format: Docker
 
-# Check service url after everything is working
+- Location Type: Region
+
+- Location: us-central1
+
+- Description: optional
+
+- Leave Repository Type as Standard
+
+- Cleanup policies: Dry run
+
+- (Optional) Enable Public Access if want the repo to be publicly pullable
+
+- Click Create
+
+- Click Copy path in Repository Details 
+
+## Check service url after everything is working
 ```bash
 gcloud run services list --platform=managed
 ```
