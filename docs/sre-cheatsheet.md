@@ -12,7 +12,6 @@ data = res.json()
 ### JSON Parsing
 
 ```bash
-import json
 data = [
      {"id":1, "status":"success"},
      {"id":2, "status":"failed"}
