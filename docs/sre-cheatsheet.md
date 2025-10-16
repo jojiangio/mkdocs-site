@@ -12,14 +12,24 @@ data = res.json()
 ### JSON Parsing
 
 ```bash
-# Access field
-field = data["key"]
+import json
+data = [
+     {"id":1, "status":"success"},
+     {"id":2, "status":"failed"}
+]
 
 # Loop over list of dicts
-values = [item["key"] for item in data]
+values = [d["key"] for d in data]
 
 # Filter
-filtered = [x for x in data if x["status"] == "failed"]
+failed = [d for d in data if d["status"] == "failed"]
+
+# Count by status
+from collections import Counter
+counts = Counter(d["status"] for d in data)
+
+# Output by Counter 
+Counter({'success':1, 'failed':1}
 ```
 
 ### JSON <-> Python
