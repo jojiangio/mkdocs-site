@@ -1,4 +1,10 @@
 site_name: My Docs
-theme: material
+theme: 
+  name: material
+  features:
+    - navigation.sections
+    - navigation.tabs
+    - toc.integrate
+  
 docs_dir: docs
 
