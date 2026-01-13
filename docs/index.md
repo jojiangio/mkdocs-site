@@ -1,8 +1,8 @@
 # Welcome to My Notes
 
-This site contains my personal notes on DevOps, Docker, and CI/CD.
+This site contains my personal on DevOps and Site Reliability Engineering (SRE)
 
-Happy reading!
+I hope you find them useful. Happy reading!
 
 
 
